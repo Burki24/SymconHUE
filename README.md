@@ -56,6 +56,7 @@ Die Einrichtung erfolgt über die Modulverwaltung von Symcon. Nach der Installat
 	// ALERT -> Wird durchgereicht
 	// EFFECT -> Wird durchgereicht
 	// TRANSITIONTIME -> Wird durchgereicht
+        // SCENE -> Szenenname
 	HUE_SetValues($lightId, $list);
 	HUEGroup_SetValues($groupId, $list);
 
@@ -63,6 +64,9 @@ Die Einrichtung erfolgt über die Modulverwaltung von Symcon. Nach der Installat
 	HUE_GetValue($lightId, $key);
 	HUEGroup_GetValue($groupId, $key);
 	
+        // Liefert Informationen zu, auf der Bridge abgespeicherte, Szenen
+        HUEGroup_GetScenes($groupId);
+
 	// Weitere Helpergunktionen für Direktverknüpfungen
 	HUE_SetState($lightId, $value)
 	HUE_GetState($lightId)
