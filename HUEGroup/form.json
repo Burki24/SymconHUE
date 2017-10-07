@@ -48,7 +48,7 @@
     }, {
       "type": "Button",
       "label": "Szene aktivieren",
-      "onClick": "HUEGroup_SetValues($id, array('SCENE' => $Scene));"
+      "onClick": "HUEGroup_SetValue($id, 'SCENE', $Scene);"
     }
   ],
   "status": [
