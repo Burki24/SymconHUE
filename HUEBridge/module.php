@@ -254,6 +254,26 @@ class HUEBridge extends IPSModule {
             IPS_SetName($deviceId, $name);
           }
 
+          // Szenen abfragen
+          $scenes = (array)$this->Request('/scenes');
+          if ($scenes) {
+            $scenesarr = array();
+            foreach ($scenes as $sceneId => $scene) {
+              $name = utf8_decode((string)$scene->name);
+              $id = utf8_decode((string)$sceneId);
+              $groupLights = $group->lights;
+              $scenesLights = $scene->lights;
+              // Szene nur in Liste aufnehmen wenn die beteiligten Lampen in der aktuellen Gruppe sind
+              if(array_intersect($scenesLights, $groupLights) === $scenesLights) {
+                // TODO
+                // erneutes encode wirklich notwendig?
+                $scenesarr[] = array("SceneID" => utf8_encode($id), "SceneName" => utf8_encode($name));
+              }
+            }
+            echo "Es wurden " . count($scenesarr) . " Szenen gefunden.\n";
+            IPS_SetProperty($deviceId, 'Scenes', json_encode($scenesarr));
+          }
+
           IPS_SetParent($deviceId, $groupsCategoryId);
 
           // Verbinde Light mit Bridge
@@ -385,7 +405,7 @@ class HUEBridge extends IPSModule {
   }
 
   private function GroupGuid() {
-  	return '{C47C8889-02C4-40A2-B18A-DBD9E47CE23D}';
+    return '{C47C8889-02C4-40A2-B18A-DBD9E47CE23D}';
   }
 
   private function SensorGuid() {

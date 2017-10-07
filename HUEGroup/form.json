@@ -5,6 +5,22 @@
       "name": "GroupId",
       "caption": "Gruppe"
     }, {
+      "type": "List",
+      "name": "Scenes",
+      "caption": "Szenen",
+      "columns": [{
+        "label": "Szene",
+        "name": "SceneID",
+        "width": "75px",
+        "add": 0,
+        "visible": false
+      }, {
+        "label": "Name",
+        "name": "SceneName",
+        "width": "auto",
+        "add": 0
+      }]
+    }, {
       "type": "Label",
       "label": "Die nachfolgenden Werte, werden automatisch aktualisiert bei \"Status neu einlesen.\""
     }, {
@@ -25,6 +41,14 @@
       "type": "Button",
       "label": "Status neu einlesen",
       "onClick": "HUEGroup_RequestData($id);"
+    }, {
+      "type": "ValidationTextBox",
+      "name": "Scene",
+      "caption": "Szene"
+    }, {
+      "type": "Button",
+      "label": "Szene aktivieren",
+      "onClick": "HUEGroup_SetValues($id, array('SCENE' => $Scene));"
     }
   ],
   "status": [

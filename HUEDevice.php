@@ -388,6 +388,13 @@ abstract class HUEDevice extends IPSModule {
   }
 
   /*
+   * HUE_GetScenes($id)
+   */
+  public function GetScenes() {
+    return json_decode($this->ReadPropertyString("Scenes"), true);
+  }
+
+  /*
    * HUE_SetValues($lightId, $list)
    * Anpassung mehrere Lampenparameter.
    * array('KEY1' => 'VALUE1', 'KEY2' => 'VALUE2'...)
@@ -490,6 +497,19 @@ abstract class HUEDevice extends IPSModule {
             IPS_SetHidden($satId, false);
           }
           break;
+        case 'SCENE':
+          $scenes = json_decode($this->ReadPropertyString("Scenes"), true);
+          foreach ($scenes as $key => $val) {
+            if ($val['SceneName'] === $value) {
+              $sceneID = $scenes[$key]["SceneID"];
+            }
+          }
+          if(isset($sceneID)) {
+            $sceneNewValue = $sceneID;
+          } else {
+            IPS_LogMessage('SymconHUE', 'Die Szene "' . $value . '" konnte nicht gefunden werden.');
+          }
+          break;
       }
     }
 
@@ -526,6 +546,9 @@ abstract class HUEDevice extends IPSModule {
     if (isset($cmNewValue)) {
       SetValueInteger($cmId, $cmNewValue);
       //$changes['colormode'] = $cmNewValue == 1 ? 'ct' : 'hs';
+    }
+    if (isset($sceneNewValue)) {
+      $changes['scene'] = $sceneNewValue;
     }
 
     if (get_class($this) == 'HUEGroup') {

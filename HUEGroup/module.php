@@ -7,6 +7,7 @@ class HUEGroup extends HUEDevice {
   public function Create() {
     parent::Create();
     $this->RegisterPropertyInteger("GroupId", 0);
+    $this->RegisterPropertyString("Scenes", "[]");
     $this->RegisterPropertyInteger("LightFeatures", 0); // 0=HUE+CT, 1=HUE, 2=CT, 3=BRI, 4=Empty
 
     if (!IPS_VariableProfileExists('ColorModeSelect.Hue')) IPS_CreateVariableProfile('ColorModeSelect.Hue', 1);
